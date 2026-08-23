@@ -52,6 +52,19 @@ hugo --source exampleSite --minify && npx pagefind --site exampleSite/public   #
 > `exampleSite/config.toml` 用 `themesDir = "../.."` 定位主题本体；把主题复制到你自己的
 > 站点后，删掉这一行即可。
 
+### 在线示例站（GitHub Pages）
+
+本仓库内置 GitHub Actions workflow（`.github/workflows/deploy-demo.yml`），推送后自动把
+`exampleSite` 构建并部署到 Pages。启用步骤：
+
+1. 仓库 **Settings → Pages → Source** 选择 **GitHub Actions**；
+2. 确认 workflow 顶部 `BASE_URL` 与你的 Pages 地址一致（项目页为
+   `https://<owner>.github.io/hugo-period/`）；
+3. 推送到 `master`/`main`（或手动 **Actions → Deploy exampleSite to GitHub Pages → Run workflow**）。
+
+> workflow 把主题 checkout 到 `period/` 子目录，用 `--themesDir $GITHUB_WORKSPACE`
+> （绝对路径）覆盖 exampleSite 的本地 `themesDir` 配置，已实测可正常构建 + Pagefind 索引。
+
 ## 三、环境要求
 
 - **Hugo extended ≥ v0.128**（推荐：内置 dart-sass，SCSS 自动编译，零 Node 依赖）；

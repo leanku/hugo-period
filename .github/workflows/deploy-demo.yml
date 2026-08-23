@@ -1,0 +1,71 @@
+# 将 exampleSite 示例站部署到 GitHub Pages
+# 站点地址：https://<owner>.github.io/hugo-period/
+# 启用方式：仓库 Settings → Pages → Source 选 "GitHub Actions"
+#
+# 关键点（本地模拟验证过）：
+# - exampleSite/config.toml 的 themesDir = "../.." 是给本地用的；
+#   本 workflow 把主题 checkout 到 period/ 子目录，用 --themesDir $GITHUB_WORKSPACE
+#   （绝对路径）覆盖，使 theme = "period" 命中工作区根的 period/；
+# - Hugo 的 --themesDir / --destination 都相对 source 解析，故都用绝对路径。
+
+name: Deploy exampleSite to GitHub Pages
+
+on:
+  push:
+    branches: [master, main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+env:
+  # 示例站部署路径（项目页）。若部署到用户页（<owner>.github.io 仓库），改为 "https://<owner>.github.io/"
+  BASE_URL: "https://leanku.github.io/hugo-period/"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout theme into subdirectory
+        uses: actions/checkout@v4
+        with:
+          path: period            # 主题放 period/，--themesDir 指向工作区根时 theme=period 命中
+
+      - name: Setup Node (Pagefind)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup Hugo (extended)
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: "0.165.0"
+          extended: true
+
+      - name: Build exampleSite
+        run: |
+          hugo --source "${{ github.workspace }}/period/exampleSite" \
+               --themesDir "${{ github.workspace }}" \
+               --baseURL "${{ env.BASE_URL }}" \
+               --destination "${{ github.workspace }}/site" \
+               --minify
+
+      - name: Build Pagefind index
+        run: npx pagefind --site "${{ github.workspace }}/site"
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
