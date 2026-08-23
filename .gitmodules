@@ -1,0 +1,3 @@
+[submodule "themes/period"]
+	path = themes/period
+	url = https://github.com/leanku/hugo-period.git

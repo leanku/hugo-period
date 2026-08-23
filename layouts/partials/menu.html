@@ -1,9 +1,0 @@
-<div id="menu-primary" class="menu-container menu-primary" role="navigation">
-  <nav class="menu" role="navigation">
-    <ul id="menu-primary-items" class="menu-primary-items">
-      {{ range .Site.Menus.main }}
-        {{ partial "menu-items.html" (dict "node" . "page" $) }}
-      {{ end }}
-    </ul>
-  </nav>
-</div>

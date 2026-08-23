@@ -1,9 +1,0 @@
-{{ define "main" }}
-{{ partial "archive-header.html" . }}
-<div id="loop-container" class="loop-container">
-  {{ range .Paginator.Pages }}
-    {{ partial "post-card.html" . }}
-  {{ end }}
-</div>
-{{ partial "pagination.html" . }}
-{{ end }}

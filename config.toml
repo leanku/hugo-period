@@ -1,9 +1,9 @@
 # ============================================================
-# Period 主题 exampleSite —— 可独立运行的演示站
-# 运行方式（在主题仓库根目录）：
-#   hugo server --source exampleSite
-# 说明：themesDir = "../.." 让示例站找到主题本体；把主题复制到
-#       你站点 themes/period 后删掉这行即可用默认配置。
+# Period 主题示例站（exampleSite 分支）
+# 运行方式（本分支根目录）：
+#   git submodule update --init --recursive   # 首次拉取主题 submodule
+#   hugo server -D                            # 预览
+# 说明：主题通过 submodule 挂在 themes/period/，用默认配置即可。
 # ============================================================
 
 baseURL = "https://example.org/"
@@ -11,7 +11,6 @@ title = "Period 主题演示"
 locale = "zh-cn"
 defaultContentLanguage = "zh-cn"
 theme = "period"
-themesDir = "../.."
 paginate = 6
 enableRobotsTXT = true
 enableEmoji = true

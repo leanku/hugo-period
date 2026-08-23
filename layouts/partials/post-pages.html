@@ -1,5 +1,0 @@
-{{- /* 文章页集合：跟随 site.Params.mainSections（Hugo 自动取内容最多的分区），
-    兼容任意分区名（posts / post / blog …），从而让 [permalinks] 改动直接生效 */}}
-{{- $main := site.Params.mainSections | default (slice "posts") }}
-{{- $pages := where site.RegularPages "Type" "in" $main }}
-{{- return $pages }}
