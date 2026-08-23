@@ -1,7 +1,6 @@
 # ---- Hugo 构建产物与缓存 ----
-# 在 exampleSite 下构建时产生，不属于主题源码
-exampleSite/public/
-exampleSite/resources/
+public/
+resources/
 .hugo_build.lock
 
 # ---- 本地开发 ----

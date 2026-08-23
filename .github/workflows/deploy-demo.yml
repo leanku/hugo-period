@@ -1,12 +1,9 @@
-# 将 exampleSite 示例站部署到 GitHub Pages
+# 将 exampleSite 分支示例站部署到 GitHub Pages
 # 站点地址：https://<owner>.github.io/hugo-period/
 # 启用方式：仓库 Settings → Pages → Source 选 "GitHub Actions"
 #
-# 关键点（本地模拟验证过）：
-# - exampleSite/config.toml 的 themesDir = "../.." 是给本地用的；
-#   本 workflow 把主题 checkout 到 period/ 子目录，用 --themesDir $GITHUB_WORKSPACE
-#   （绝对路径）覆盖，使 theme = "period" 命中工作区根的 period/；
-# - Hugo 的 --themesDir / --destination 都相对 source 解析，故都用绝对路径。
+# 参照 PaperMod 的分支方案：示例站独立为 exampleSite 分支（标准 Hugo 站点，
+# 主题以 submodule 挂在 themes/period/），本 workflow 检出该分支并拉取 submodule 构建。
 
 name: Deploy exampleSite to GitHub Pages
 
@@ -32,10 +29,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout theme into subdirectory
+      - name: Checkout exampleSite branch
         uses: actions/checkout@v4
         with:
-          path: period            # 主题放 period/，--themesDir 指向工作区根时 theme=period 命中
+          ref: exampleSite        # 检出示例站分支
+
+      - name: Get Theme (submodule)
+        run: git submodule update --init --recursive
+
+      - name: Update theme to latest commit
+        run: git submodule update --remote --merge
 
       - name: Setup Node (Pagefind)
         uses: actions/setup-node@v4
@@ -48,16 +51,11 @@ jobs:
           hugo-version: "0.165.0"
           extended: true
 
-      - name: Build exampleSite
-        run: |
-          hugo --source "${{ github.workspace }}/period/exampleSite" \
-               --themesDir "${{ github.workspace }}" \
-               --baseURL "${{ env.BASE_URL }}" \
-               --destination "${{ github.workspace }}/site" \
-               --minify
+      - name: Build with Hugo
+        run: hugo --minify --baseURL "${{ env.BASE_URL }}"
 
       - name: Build Pagefind index
-        run: npx pagefind --site "${{ github.workspace }}/site"
+        run: npx pagefind --site public
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -65,7 +63,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: site
+          path: public
 
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4

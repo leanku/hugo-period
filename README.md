@@ -17,11 +17,11 @@
 
 ```bash
 mkdir -p themes && git clone https://github.com/leanku/hugo-period.git themes/period
-# 然后复制配置模板并启动
-copy themes/period/exampleSite/config.toml config.toml   # Windows
-cp themes/period/exampleSite/config.toml config.toml     # macOS/Linux
 hugo server -D
 ```
+
+> 配置模板：克隆 [exampleSite 分支](https://github.com/leanku/hugo-period/tree/exampleSite) 后
+> 把 `config.toml`、`content/` 等复制到你的站点，或参考其参数注释手写配置。
 
 ### 方式二：Git Submodule
 
@@ -39,31 +39,30 @@ hugo mod init github.com/yourname/my-site
 #     path = "github.com/leanku/hugo-period"
 ```
 
-## 二、快速开始（自带演示站）
+## 二、示例站（exampleSite 分支）
 
-主题仓库内包含可独立运行的 `exampleSite/`（7 篇主题说明文章 + 完整配置）：
+示例站已拆分为独立的 [`exampleSite` 分支](https://github.com/leanku/hugo-period/tree/exampleSite)
+（参照 [PaperMod](https://github.com/adityatelange/hugo-PaperMod) 的做法）：分支根目录即标准
+Hugo 站点（7 篇主题说明文章 + 完整配置），主题通过 submodule 引入。
+
+本地运行：
 
 ```bash
-cd themes/period
-hugo server --source exampleSite        # 打开 http://localhost:1313
-hugo --source exampleSite --minify && npx pagefind --site exampleSite/public   # 生产构建+搜索
+git clone --branch exampleSite https://github.com/leanku/hugo-period.git
+cd hugo-period
+git submodule update --init --recursive   # 拉取主题 submodule
+hugo server -D                            # http://localhost:1313
 ```
-
-> `exampleSite/config.toml` 用 `themesDir = "../.."` 定位主题本体；把主题复制到你自己的
-> 站点后，删掉这一行即可。
 
 ### 在线示例站（GitHub Pages）
 
-本仓库内置 GitHub Actions workflow（`.github/workflows/deploy-demo.yml`），推送后自动把
-`exampleSite` 构建并部署到 Pages。启用步骤：
+本仓库 `master` 分支内置 GitHub Actions workflow（`.github/workflows/deploy-demo.yml`），
+推送后自动检出 `exampleSite` 分支、拉取 submodule 并部署到 Pages。启用步骤：
 
 1. 仓库 **Settings → Pages → Source** 选择 **GitHub Actions**；
 2. 确认 workflow 顶部 `BASE_URL` 与你的 Pages 地址一致（项目页为
    `https://<owner>.github.io/hugo-period/`）；
 3. 推送到 `master`/`main`（或手动 **Actions → Deploy exampleSite to GitHub Pages → Run workflow**）。
-
-> workflow 把主题 checkout 到 `period/` 子目录，用 `--themesDir $GITHUB_WORKSPACE`
-> （绝对路径）覆盖 exampleSite 的本地 `themesDir` 配置，已实测可正常构建 + Pagefind 索引。
 
 ## 三、环境要求
 
@@ -73,8 +72,8 @@ hugo --source exampleSite --minify && npx pagefind --site exampleSite/public   #
 
 ## 四、配置
 
-完整注释版配置见 `exampleSite/config.toml`（开箱即用的演示配置，也是所有参数的活文档），
-核心参数速览：
+完整注释版配置见 [exampleSite 分支](https://github.com/leanku/hugo-period/tree/exampleSite) 的
+`config.toml`（开箱即用的演示配置，也是所有参数的活文档），核心参数速览：
 
 ```toml
 [params]
@@ -105,7 +104,7 @@ hugo --source exampleSite --minify && npx pagefind --site exampleSite/public   #
 - 特色图：`featured` 指向 `static/` 图片，或 Page Bundle 自动取图；列表页 2:1 裁切（建议 ≥1200×600）
 - URL 结构：`[permalinks] post = "/:sections/:slug/"`，嵌套分区需 `_index.md`
 - Markdown：表格/脚注/任务列表/定义列表/原始 HTML（unsafe 已开）
-- 示例文章即使用说明：见 `exampleSite/content/post/theme-*.md`
+- 示例文章即使用说明：见 [exampleSite 分支](https://github.com/leanku/hugo-period/tree/exampleSite) 的 `content/post/theme-*.md`
 
 ## 六、定制
 
@@ -117,13 +116,13 @@ hugo --source exampleSite --minify && npx pagefind --site exampleSite/public   #
 ## 七、目录结构
 
 ```text
-period/
+period/                    # master 分支 = 主题本体
 ├── theme.toml            # 主题元数据（含版本号）
 ├── go.mod                # Hugo Module 支持
 ├── README.md             # 本文档
 ├── LICENSE.md            # GPL-2.0 + Font Awesome 授权说明
 ├── .gitignore            # 不入库的构建产物/缓存
-├── docs/DESIGN.md        # 设计文档（视觉令牌推导、结构对照）
+├── .github/workflows/    # GitHub Pages 示例站部署
 ├── layouts/              # baseof + partials + shortcodes
 │   └── partials/
 │       ├── seo/          # OpenGraph / TwitterCards / JSON-LD
@@ -133,8 +132,14 @@ period/
 │   └── css/              # 预编译 main.css + chroma.css
 ├── assets/js/            # 原生交互脚本
 ├── i18n/                 # 中英文案
-├── static/font-awesome/  # 图标字体
-└── exampleSite/          # ★ 可独立运行的演示站
+└── static/font-awesome/  # 图标字体
+
+exampleSite 分支          # 独立示例站（标准 Hugo 站点）
+├── config.toml           # 完整注释版配置
+├── content/              # 7 篇主题说明文章 + 页面
+├── archetypes/
+├── static/images/        # 示例图
+└── themes/period/        # 主题 submodule（gitlink）
 ```
 
 ## 八、版本与发布
@@ -148,5 +153,3 @@ period/
 - 主题代码：**GPL v2 or later**（移植自 [Period WordPress Theme](https://www.competethemes.com/period/) by Compete Themes）
 - 内置 Font Awesome 5 Free（CC BY 4.0 / SIL OFL 1.1 / MIT）
 - 示例图片为占位图，发布前请替换
-
-设计过程与视觉令牌推导见 [`docs/DESIGN.md`](docs/DESIGN.md)。
