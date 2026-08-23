@@ -4,9 +4,6 @@
 深色页眉 + 浅灰背景 + 白色卡片，内容区上叠压住页眉下沿是它的标志性视觉。配色、字体、
 间距、断点均逐值移植自原版 `style.css`。
 
-> **⚠️ 发布前替换**：本仓库统一使用占位符 `github.com/yourname/period`（`README.md`、
-> `theme.toml`、`go.mod` 三处）。把主题推到自己的仓库后，请全局搜索替换为真实地址。
-
 - **字体**：Roboto（300/400/700）
 - **布局**：1300px 最大宽度、可切换左右侧栏、三档断点（600/900/1100px）
 - **零依赖 JS**：菜单/搜索/返回顶部/代码复制均为原生脚本
@@ -19,7 +16,7 @@
 ### 方式一：复制到站点（最简单）
 
 ```bash
-mkdir -p themes && git clone https://github.com/yourname/period.git themes/period
+mkdir -p themes && git clone https://github.com/leanku/hugo-period.git themes/period
 # 然后复制配置模板并启动
 copy themes/period/exampleSite/config.toml config.toml   # Windows
 cp themes/period/exampleSite/config.toml config.toml     # macOS/Linux
@@ -29,7 +26,7 @@ hugo server -D
 ### 方式二：Git Submodule
 
 ```bash
-git submodule add https://github.com/yourname/period.git themes/period
+git submodule add https://github.com/leanku/hugo-period.git themes/period
 ```
 
 ### 方式三：Hugo Module（推荐给新项目）
@@ -39,7 +36,7 @@ hugo mod init github.com/yourname/my-site
 # config.toml 中：
 # [module]
 #   [[module.imports]]
-#     path = "github.com/yourname/period"
+#     path = "github.com/leanku/hugo-period"
 ```
 
 ## 二、快速开始（自带演示站）
