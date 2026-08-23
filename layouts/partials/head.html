@@ -1,0 +1,82 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+{{- /* robots 索引控制（对应 PaperMod：生产 index,follow；开发 noindex；页面可用 robotsNoIndex 强制屏蔽）*/}}
+{{- if hugo.IsProduction | or (eq site.Params.env "production") | and (ne .Params.robotsNoIndex true) }}
+<meta name="robots" content="index, follow">
+{{- else }}
+<meta name="robots" content="noindex, nofollow">
+{{- end }}
+
+{{- /* 标题 */}}
+<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ if .Title }}{{ .Title }} | {{ end }}{{ site.Title }}{{ end }}</title>
+
+{{- /* 关键词 */}}
+{{- if .IsHome }}
+{{- with site.Params.keywords }}<meta name="keywords" content="{{ range $i, $e := . }}{{ if $i }}, {{ end }}{{ $e }}{{ end }}">{{ end }}
+{{- else }}
+<meta name="keywords" content="{{ if .Params.keywords }}{{ range $i, $e := .Params.keywords }}{{ if $i }}, {{ end }}{{ $e }}{{ end }}{{ else }}{{ range $i, $e := .Params.tags }}{{ if $i }}, {{ end }}{{ $e }}{{ end }}{{ end }}">
+{{- end }}
+
+{{- /* 描述 */}}
+<meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ if or .IsPage .IsSection }}{{ .Summary | default (printf "%s - %s" .Title site.Title) }}{{ else }}{{ with site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }}">
+
+{{- /* 作者 */}}
+<meta name="author" content="{{ .Params.author | default site.Params.author | default site.Title }}">
+
+{{- /* canonical（支持 canonicalURL 手动覆盖）*/}}
+<link rel="canonical" href="{{ if .Params.canonicalURL }}{{ trim .Params.canonicalURL " " }}{{ else }}{{ .Permalink }}{{ end }}">
+
+{{- /* 搜索引擎站长验证 */}}
+{{- with site.Params.seo.verification.google }}<meta name="google-site-verification" content="{{ . }}">{{ end }}
+{{- with site.Params.seo.verification.bing }}<meta name="msvalidate.01" content="{{ . }}">{{ end }}
+{{- with site.Params.seo.verification.yandex }}<meta name="yandex-verification" content="{{ . }}">{{ end }}
+{{- with site.Params.seo.verification.naver }}<meta name="naver-site-verification" content="{{ . }}">{{ end }}
+
+{{- /* Favicon 家族与主题色 */}}
+<link rel="icon" href="{{ site.Params.seo.favicon | default "images/favicon.svg" | absURL }}" type="image/svg+xml">
+<link rel="apple-touch-icon" href="{{ site.Params.seo.appleTouchIcon | default "images/favicon.svg" | absURL }}">
+<meta name="theme-color" content="{{ site.Params.seo.themeColor | default "#333333" }}">
+<meta name="msapplication-TileColor" content="{{ site.Params.seo.themeColor | default "#333333" }}">
+
+{{- /* RSS 与多语言 hreflang 交替链接 */}}
+{{- range .AlternativeOutputFormats }}
+<link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink | safeURL }}">
+{{- end }}
+{{- range .AllTranslations }}
+<link rel="alternate" hreflang="{{ .Lang }}" href="{{ .Permalink }}">
+{{- end }}
+
+{{- /* Google Fonts（对应原主题加载的 Roboto）*/}}
+{{- if site.Params.googleFonts }}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css?family={{ site.Params.fontFamily | default "Roboto:300,300italic,400,700" }}&subset={{ site.Params.fontSubsets | default "latin,latin-ext" }}&display=swap" rel="stylesheet">
+{{- end }}
+
+{{- /* 图标字体与主题样式（压缩 + 指纹 + preload + SRI）
+      extended Hugo（v0.128+，内置 dart-sass）：Pipes 直接编译 SCSS
+      非 extended：回退使用预编译的 assets/css/main.css（npm run css 生成）*/}}
+<link rel="stylesheet" href="{{ "font-awesome/css/all.min.css" | absURL }}">
+{{- $css := resources.Get "css/main.css" | minify | fingerprint }}
+{{- if hugo.IsExtended }}
+  {{- $cssOpts := (dict "targetPath" "css/main.css" "outputStyle" "compressed" "enableSourceMap" false) }}
+  {{- $css = resources.Get "scss/main.scss" | toCSS $cssOpts | fingerprint }}
+{{- end }}
+<link rel="preload" href="{{ $css.RelPermalink }}" as="style" crossorigin="anonymous">
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}" crossorigin="anonymous">
+{{- /* 代码高亮（Chroma，对应 markup.highlight.style = "github"）*/}}
+{{- $chroma := resources.Get "css/chroma.css" | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $chroma.RelPermalink }}">
+
+{{- /* 自定义 head 注入钩子 */}}
+{{ partial "extend_head.html" . }}
+
+{{- /* SEO 结构化输出（对应 PaperMod：默认仅生产环境输出，避免开发环境污染索引；
+      params.seo.alwaysInclude = true 可强制开发环境输出以便调试）*/}}
+{{- $seo := site.Params.seo }}
+{{- if or hugo.IsProduction (eq site.Params.env "production") $seo.alwaysInclude }}
+  {{- if ne $seo.enableOpenGraph false }}{{ partial "seo/opengraph.html" . }}{{ end }}
+  {{- if ne $seo.enableTwitterCards false }}{{ partial "seo/twitter-cards.html" . }}{{ end }}
+  {{- if ne $seo.enableSchema false }}{{ partial "seo/schema-json.html" . }}{{ end }}
+{{- end }}

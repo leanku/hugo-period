@@ -1,0 +1,57 @@
+// ============================================================
+// Layout — 网格与上叠压头
+// ============================================================
+
+@import "variables";
+@import "mixins";
+
+.max-width {
+  max-width: $max-width;
+  margin: 0 auto;
+}
+
+.primary-container {
+  padding: 0 $page-gutter;
+  margin-top: -$header-overlap;       // 签名特征：内容上叠压住页眉下沿
+  min-height: 100vh;
+  min-height: calc(100vh - 291px);
+  @include clearfix;
+}
+
+.main {
+  margin: 0 auto;
+}
+
+.loop-container {
+  @include clearfix;
+}
+
+// ---- 双栏网格（≥900px）----
+@include bp($bp-900) {
+  .main {
+    width: $col-main;
+    float: left;
+    margin-right: $col-gap;
+  }
+
+  .full-width .main,
+  .page-template-full-width .main {
+    width: 100%;
+    float: none;
+    margin-right: 0;
+  }
+
+  .left-sidebar .main {
+    float: right;
+    margin-right: 0;
+    margin-left: $col-gap;
+  }
+}
+
+// 无侧栏场景（侧栏组件未配置时主栏仍占满）
+.no-sidebar .main {
+  width: 100%;
+  float: none;
+  margin: 0 auto;
+}
+

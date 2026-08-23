@@ -1,0 +1,45 @@
+// ============================================================
+// Period Hugo Theme — Design Tokens
+// 逐值对应原版 Period WordPress 主题（v1.750）style.css
+// ============================================================
+
+// ---- Colors（对应 §1.2 设计文档）----
+$c-page:              #EDEDED;   // 页面背景
+$c-text:              #333333;   // 正文 / 链接 / 标题
+$c-text-hover:        #757575;   // 链接 hover
+$c-header:            #333333;   // 页眉 / 页脚背景
+$c-header-text:       #FFFFFF;   // 页眉 / 菜单 / 页脚链接
+$c-header-text-hover: #D4D4D4;   // tagline、页眉链接 hover、页脚文字
+$c-credit:            #242424;   // credit 条、当前菜单项、归档 pill、返回顶部
+$c-card:              #FFFFFF;   // 卡片背景
+$c-card-shadow:       rgba(58, 58, 58, 0.2);
+$c-input-bg:          #F7F7F7;   // 输入框 / 代码背景
+$c-input-border:      #D4D4D4;   // 输入框描边
+$c-muted:             #666666;   // placeholder / 次要文字
+
+// ---- Typography ----
+$font-family: "Roboto", "Open Sans", sans-serif;
+$font-light:  300;
+$font-regular: 400;
+$font-bold:   700;
+
+$fs-base: 16px;
+$lh-base: 1.5;
+
+// ---- Layout ----
+$max-width:      1300px;
+$header-overlap: 5.25em;        // 内容上叠压头
+$page-gutter:    5.5556%;       // 页面左右留白
+$col-main:       62.5005%;
+$col-side:       34.375275%;
+$col-gap:        3.125025%;
+
+// ---- 卡片内边距 ----
+$card-pad-mobile: 1.5em 4.6875375%;
+$card-pad-900:    1.5em 7.50006%;
+$card-pad-1100:   1.875em 7.50006% 2.25em;
+
+// ---- Breakpoints（与原主题媒体查询一致）----
+$bp-600:  37.5em;   // 600px
+$bp-900:  56.25em;  // 900px
+$bp-1100: 68.75em;  // 1100px

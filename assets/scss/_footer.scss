@@ -1,0 +1,60 @@
+// ============================================================
+// Footer — 页脚、credit 条、返回顶部
+// ============================================================
+
+@import "variables";
+@import "mixins";
+
+.site-footer {
+  text-align: center;
+  background: $c-header;
+  margin-top: 3.75em;
+  color: $c-header-text-hover;
+  clear: both;
+
+  a {
+    color: $c-header-text;
+    font-weight: $font-bold;
+  }
+
+  .site-copyright { margin: 0; padding: 1.5em 0 0; }
+}
+
+.design-credit {
+  background: $c-credit;
+  padding: 9px $page-gutter;
+  margin-top: 1.875em;
+
+  span {
+    font-size: 0.75em;
+    line-height: 1.5;
+  }
+}
+
+.scroll-to-top {
+  position: fixed;
+  bottom: -45px;
+  right: 0;
+  z-index: 9;
+  background: $c-credit;
+  border: none;
+  color: #fff;
+  padding: 9px 0;
+  width: 60px;
+  cursor: pointer;
+  @include transition(background, 0.2s);
+  @include transition(transform, 0.3s);
+
+  &.visible { transform: translateY(-45px); }
+
+  &:hover {
+    background: #666666;
+    i { transform: translateY(-4px); }
+  }
+
+  i {
+    font-size: 21px;
+    @include transition(transform, 0.2s);
+  }
+}
+

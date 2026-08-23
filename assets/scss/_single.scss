@@ -1,0 +1,207 @@
+// ============================================================
+// Single — 单篇页：标题、署名、正文、分类/标签、前后篇
+// ============================================================
+
+@import "variables";
+@import "mixins";
+
+.post-header {
+  margin: 0 0 1.5em 0;
+}
+
+// 标题字号随断点放大（原主题 Silent Classes 的响应式部分）
+@include bp($bp-600) {
+  .post-title { font-size: 1.3125em; line-height: 1.333; }
+}
+
+@include bp($bp-1100) {
+  .post-title { font-size: 1.75em; line-height: 1.357; }
+}
+
+// ---- 署名 ----
+.post-byline {
+  .date, .author {
+    font-weight: $font-bold;
+    text-decoration: underline;
+  }
+  .date:hover, .date:active, .date:focus,
+  .author:hover, .author:active, .author:focus {
+    text-decoration: none;
+  }
+}
+
+// ---- 正文 ----
+.post-content {
+  a {
+    text-decoration: underline;
+    font-weight: $font-bold;
+  }
+  a:hover, a:active, a:focus { text-decoration: none; }
+  iframe { max-width: 100%; }
+  @include clearfix;
+}
+
+.last-updated {
+  font-style: italic;
+}
+
+// ---- 底部元数据 ----
+.post-meta {
+  margin: 1.875em 0 0.75em;
+}
+
+.post-categories {
+  margin-bottom: 1.71em;
+
+  a { font-weight: $font-bold; }
+  a:hover, a:active, a:focus { text-decoration: underline; }
+}
+
+.post-tags {
+  margin-bottom: 1.125em;
+
+  ul { list-style: none; margin: 0; }
+  li { display: inline-block; }
+  a {
+    display: inline-block;
+    padding: 0 12px;
+    border: solid 1px $c-text;
+    margin: 0 6px 6px 0;
+    @include transition(all, 0.2s);
+  }
+  a:hover, a:active, a:focus {
+    background: $c-text;
+    color: $c-header-text;
+  }
+}
+
+// ---- 上一篇 / 下一篇 ----
+.further-reading {
+  .previous { margin-bottom: 0.75em; }
+
+  a {
+    font-weight: $font-bold;
+    display: block;
+  }
+  a:hover, a:active, a:focus { text-decoration: underline; }
+}
+
+@include bp($bp-600) {
+  .further-reading {
+    div {
+      width: 50%;
+      display: inline-block;
+      vertical-align: top;
+      margin-right: -4px;
+    }
+    .previous { margin-bottom: 0; }
+    .next { text-align: right; }
+  }
+}
+
+// ---- 归档页（/archives/）----
+.archive-year {
+  font-size: 1.3125em;
+  line-height: 1.333;
+  margin: 1.5em 0 0.75em;
+  padding-bottom: 0.375em;
+  border-bottom: solid 1px $c-page;
+}
+
+.archive-month {
+  font-size: 1em;
+  line-height: 1.5;
+  margin: 1.5em 0 0.5em;
+  color: $c-text;
+  &::before { content: ""; display: inline-block; width: 6px; height: 6px; background: $c-header; margin-right: 0.5em; vertical-align: middle; }
+}
+
+.archive-list {
+  list-style: none;
+  margin: 0 0 1.5em;
+  padding: 0;
+
+  li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 0.75em;
+    padding-bottom: 0.375em;
+    border-bottom: solid 1px $c-page;
+
+    a {
+      font-weight: $font-bold;
+      padding-right: 1em;
+    }
+    a:hover { text-decoration: underline; }
+  }
+
+  .archive-date {
+    font-size: 0.75em;
+    line-height: 1.5;
+    color: $c-muted;
+    white-space: nowrap;
+  }
+}
+
+// ---- 标签云（/tags/ 总览页）----
+.term-cloud {
+  line-height: 2.2;
+
+  .term-cloud-item {
+    display: inline-block;
+    border: solid 1px $c-text;
+    padding: 0 14px;
+    margin: 0 8px 8px 0;
+    vertical-align: middle;
+    @include transition(all, 0.2s);
+
+    .term-count {
+      font-size: 0.75em;
+      color: $c-muted;
+      margin-left: 4px;
+    }
+  }
+  .term-cloud-item:hover, .term-cloud-item:active, .term-cloud-item:focus {
+    background: $c-text;
+    color: $c-header-text;
+    text-decoration: none;
+
+    .term-count { color: $c-header-text-hover; }
+  }
+}
+
+// ---- 友情链接页（/links/）----
+.links-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    margin-bottom: 1.5em;
+    padding-bottom: 1em;
+    border-bottom: solid 1px $c-page;
+
+    &:last-child { border-bottom: 0; }
+  }
+
+  .link-name {
+    font-weight: $font-bold;
+    font-size: 1.1em;
+    display: inline-block;
+  }
+  .link-name:hover { text-decoration: underline; }
+
+  .link-desc {
+    margin: 0.5em 0 0;
+    font-size: 0.9em;
+    line-height: 1.6;
+  }
+
+  .link-author {
+    margin: 0.25em 0 0;
+    font-size: 0.8em;
+    color: $c-muted;
+  }
+}
+

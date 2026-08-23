@@ -1,0 +1,11 @@
+{{/* 文章分类（对应 content/post-categories.php） */}}
+{{ with .GetTerms "categories" }}
+<p class="post-categories">
+  <span>{{ i18n "publishedIn" }} </span>
+  {{ $len := len . }}
+  {{ range $i, $t := . }}
+    {{ if and (gt $len 1) (eq (add $i 1) $len) }}{{ i18n "and" }} {{ end }}
+    <a href="{{ $t.RelPermalink }}" title="{{ i18n "viewAllIn" (dict "name" $t.LinkTitle) }}">{{ $t.LinkTitle }}</a>{{ if lt (add $i 1) $len }}, {{ end }}
+  {{ end }}
+</p>
+{{ end }}

@@ -1,0 +1,12 @@
+<section class="widget widget_archives">
+  <h3 class="widget-title">{{ i18n "archives" }}</h3>
+  <ul>
+    {{ $pages := partial "post-pages.html" . }}
+    {{ range $pages.GroupByDate "2006" }}
+      {{ $year := .Key }}
+      {{ range .Pages.GroupByDate "01" }}
+      <li><a href="{{ printf "%sarchives/#%s-%s" site.Home.RelPermalink $year .Key }}">{{ $year }}年{{ .Key }}月</a> ({{ len .Pages }})</li>
+      {{ end }}
+    {{ end }}
+  </ul>
+</section>

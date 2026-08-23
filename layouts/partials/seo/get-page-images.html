@@ -1,0 +1,38 @@
+{{- /* 收集页面图片（对应 PaperMod partials/templates/_funcs/get-page-images.html）
+  优先级：front matter images → featured（含 Bundle 资源名 *feature* / {*cover*,*thumbnail*}）→ 站点级 images
+  返回 slice[dict{RelPermalink, Permalink}] */}}
+{{- $imgs := slice }}
+{{- $imgParams := .Params.images }}
+{{- $resources := .Resources.ByType "image" -}}
+
+{{- if not $imgParams }}
+  {{- $featured := $resources.GetMatch "*feature*" -}}
+  {{- if not $featured }}{{ $featured = $resources.GetMatch "{*cover*,*thumbnail*}" }}{{ end -}}
+  {{- if not $featured }}{{ with .Params.featured }}{{ $featured = $.Resources.GetMatch . }}{{ end }}{{ end -}}
+  {{- with $featured }}
+    {{- $imgs = $imgs | append (dict "RelPermalink" .RelPermalink "Permalink" .Permalink) }}
+  {{- else }}
+    {{- with .Params.featured }}
+      {{- $imgs = $imgs | append (dict "RelPermalink" (relURL .) "Permalink" (absURL .)) }}
+    {{- end }}
+  {{- end }}
+{{- end }}
+
+{{- if and (not $imgParams) (not $imgs) }}
+  {{- with site.Params.images }}{{ $imgParams = first 1 . }}{{ end }}
+{{- end }}
+
+{{- range $imgParams }}
+  {{- $url := urls.Parse . }}
+  {{- if eq $url.Scheme "" }}
+    {{- with $resources.GetMatch . }}
+      {{- $imgs = $imgs | append (dict "RelPermalink" .RelPermalink "Permalink" .Permalink) }}
+    {{- else }}
+      {{- $imgs = $imgs | append (dict "RelPermalink" (relURL .) "Permalink" (absURL .)) }}
+    {{- end }}
+  {{- else }}
+    {{- $imgs = $imgs | append (dict "RelPermalink" . "Permalink" .) }}
+  {{- end }}
+{{- end }}
+
+{{- return $imgs }}

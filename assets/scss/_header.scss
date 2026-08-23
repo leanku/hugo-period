@@ -1,0 +1,178 @@
+// ============================================================
+// Header — 页眉、站点标题、社交图标、搜索
+// ============================================================
+
+@import "variables";
+@import "mixins";
+
+.site-header {
+  background: $c-header;
+  color: $c-header-text;
+  text-align: center;
+  padding: 36px $page-gutter $header-overlap;
+  @include clearfix;
+}
+
+.site-title {
+  font-weight: $font-bold;
+  a { color: $c-header-text; }
+  a:hover, a:active, a:focus { color: $c-header-text-hover; }
+}
+
+.tagline {
+  color: $c-header-text-hover;
+  margin: 0;
+}
+
+.logo {
+  max-width: 100%;
+  width: 168px;
+  height: auto;
+}
+
+// ---- 社交图标 ----
+.social-media-icons {
+  list-style: none;
+  margin: 0 0 1.5em 0;
+  @include transition(all, 0.2s);
+
+  li {
+    display: inline-block;
+    margin-right: 20px;
+    &:last-child { margin-right: 0; }
+  }
+
+  a {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 0;
+    color: $c-header-text;
+    &:hover, &:active, &:focus { color: $c-header-text-hover; }
+  }
+}
+
+// ---- 页眉搜索（对应 content/search-bar.php）----
+.search-form-container {
+  position: absolute;
+  right: 6px;
+  top: 0.75em;
+  z-index: 19;
+
+  // 展开态：容器或按钮任一加 .open 均生效（JS 两者都加）
+  &.open form,
+  button.open + form {
+    opacity: 1;
+    pointer-events: auto;   // 展开后可交互
+  }
+
+  button {
+    position: relative;
+    z-index: 9;
+    background: none;
+    border: none;
+    margin: 5px -10px 0 0;
+    padding: 6px 10px;
+    font-size: 1em;
+    line-height: 1.5;
+    cursor: pointer;
+    &:hover i, &:active i, &:focus i { color: $c-header-text-hover; }
+    &.open i { color: $c-text; }
+  }
+
+  i {
+    color: $c-header-text;
+    z-index: -1;
+    @include transition(all, 0.2s);
+  }
+
+  form {
+    position: absolute;
+    top: -2px;
+    right: -12px;
+    left: 0;
+    padding-top: 6px;
+    opacity: 0;
+    pointer-events: none;           // 关闭时透明且不拦截图标的点击（勿加 z-index，否则会盖住放大镜图标）
+    @include transition(all, 0.15s ease-in-out);
+  }
+
+  .search-field {
+    max-width: none !important;
+    outline: none !important;
+    padding: 6px 12px !important;
+
+    // 隐藏浏览器原生的清除"×"按钮（对应原主题，避免与样式冲突）
+    &::-webkit-search-decoration,
+    &::-webkit-search-cancel-button,
+    &::-webkit-search-results-button,
+    &::-webkit-search-results-decoration {
+      -webkit-appearance: none;
+    }
+    &::-ms-clear {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+    &::-ms-reveal {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+
+    &:focus {
+      background: $c-card !important;
+      outline: solid 1px $c-page !important;
+      animation: pulse 1s infinite;
+    }
+  }
+}
+
+@keyframes pulse {
+  0%   { outline-color: $c-text; }
+  50%  { outline-color: $c-page; }
+  100% { outline-color: $c-text; }
+}
+
+// ---- 桌面端：左标题 + 右图标 ----
+@include bp($bp-900) {
+  .site-header { text-align: left; }
+
+  .title-container {
+    position: relative;
+    z-index: 9;
+    margin-bottom: 2.25em;
+    float: left;
+  }
+
+  .site-title, .tagline { display: inline-block; }
+  .tagline { margin-left: 6px; }
+
+  .icon-container {
+    float: right;
+    margin-top: 5px;
+  }
+
+  .social-media-icons {
+    display: inline-block;
+    margin: 0 1.5em 0 0;
+    vertical-align: middle;
+  }
+
+  .search-form-container {
+    position: relative;
+    float: right;
+    top: -5px;
+    right: 0;
+    z-index: 9;
+    text-align: right;
+    margin: 0 0 0 1.5em;
+    display: inline-block;
+
+    button { margin: 0; padding: 4px 10px; cursor: pointer; }
+    // 展开时输入框向左展开 266px（容器或按钮任一 .open 均生效）
+    &.open form,
+    button.open + form { left: -266px; }
+    form { padding-top: 0; right: 0; }
+  }
+}
+

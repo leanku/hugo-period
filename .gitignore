@@ -1,0 +1,27 @@
+# ---- Hugo 构建产物与缓存 ----
+# 在 exampleSite 下构建时产生，不属于主题源码
+exampleSite/public/
+exampleSite/resources/
+.hugo_build.lock
+
+# ---- 本地开发 ----
+# Hugo 资源缓存（_gen，自动重建）
+resources/
+
+# ---- 系统/编辑器文件 ----
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+*.iml
+
+# ---- 临时文件 ----
+*.tmp
+*.tmpdir
+
+# ---- Node（仅在使用普通版 Hugo 预编译样式时需要，主题仓库本身无 Node 依赖）----
+node_modules/
+.npm-cache/

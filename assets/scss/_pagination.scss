@@ -1,0 +1,43 @@
+// ============================================================
+// Pagination — 列表分页
+// ============================================================
+
+@import "variables";
+@import "mixins";
+
+.pagination {
+  background: $c-card;
+  @include card-shadow;
+  padding: $card-pad-mobile;
+  text-align: center;
+  margin-bottom: 1.5em;
+  @include clearfix;
+
+  .prev, .next { font-weight: $font-bold; }
+
+  .prev {
+    float: left;
+    margin-left: 0;
+    &:before { content: "\00ab"; margin-right: 4px; }
+  }
+
+  .next {
+    float: right;
+    margin-right: 0;
+    &:after { content: "\00bb"; margin-left: 4px; }
+  }
+
+  a, span { margin: 0 0.75em; }
+
+  a.current, span.current {
+    padding: 2px 8px;
+    background: $c-page;
+  }
+}
+
+@include bp($bp-900) {
+  .pagination { padding: $card-pad-900; }
+}
+// 上一页/下一页使用浮动，落在卡片内边距内（不贴边），各断点行为一致
+
+

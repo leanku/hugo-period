@@ -1,0 +1,15 @@
+{{/* 关于组件：完全复刻 laruence.com 的 widget_text
+    结构：section.widget.widget_text > div.textwidget > div#profile（picture + intro）*/}}
+<section class="widget widget_text">
+  <div class="textwidget">
+    <div id="profile">
+      <div id="profile_picture">
+        <img src="{{ site.Params.sidebar.about.image | absURL }}" alt="{{ site.Params.sidebar.about.name | default (i18n "about") }}">
+      </div>
+      <div id="profile_intro">
+        <p><span class="name">{{ site.Params.sidebar.about.name }}</span></p>
+        <p class="intro">{{ site.Params.sidebar.about.text | markdownify }}</p>
+      </div>
+    </div>
+  </div>
+</section>

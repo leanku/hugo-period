@@ -1,0 +1,33 @@
+{{/* 社交图标：映射 Font Awesome 类名（与原主题一致） */}}
+{{ $icons := dict
+  "rss"         "fas fa-rss"
+  "email"       "fas fa-envelope"
+  "email-form"  "far fa-envelope"
+  "podcast"     "fas fa-podcast"
+  "ok-ru"       "fab fa-odnoklassniki"
+  "wechat"      "fab fa-weixin"
+  "pocket"      "fab fa-get-pocket"
+  "phone"       "fas fa-phone"
+  "twitter"     "fab fa-x-twitter"
+}}
+{{ $social := site.Params.social }}
+{{ $has := false }}
+{{ range $k, $v := $social }}{{ if $v }}{{ $has = true }}{{ end }}{{ end }}
+{{ if $has }}
+<ul class="social-media-icons">
+  {{ range $name, $url := $social }}
+    {{ if $url }}
+      {{ $class := index $icons $name | default (printf "fab fa-%s" $name) }}
+      {{ $href := $url }}
+      {{ if eq $name "rss" }}{{ $href = $url | absURL }}{{ end }}
+      {{ if eq $name "email" }}{{ if not (hasPrefix $href "mailto:") }}{{ $href = printf "mailto:%s" $href }}{{ end }}{{ end }}
+      <li>
+        <a class="{{ $name }}" target="_blank" rel="noopener" href="{{ $href }}">
+          <i class="{{ $class }}" aria-hidden="true" title="{{ $name }}"></i>
+          <span class="screen-reader-text">{{ $name }}</span>
+        </a>
+      </li>
+    {{ end }}
+  {{ end }}
+</ul>
+{{ end }}

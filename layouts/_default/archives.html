@@ -1,0 +1,30 @@
+{{ define "main" }}
+<div class="entry">
+  <article>
+    <div class="post-container">
+      <div class="post-header">
+        <h1 class="post-title">{{ .Title }}</h1>
+      </div>
+      <div class="post-content">
+        {{ $pages := partial "post-pages.html" . }}
+        {{ range $pages.GroupByDate "2006" }}
+          {{ $year := .Key }}
+          <h2 class="archive-year" id="{{ $year }}">{{ $year }} 年</h2>
+          {{ range .Pages.GroupByDate "01" }}
+            {{ $month := .Key }}
+            <h3 class="archive-month" id="{{ $year }}-{{ $month }}">{{ $month }}月</h3>
+            <ul class="archive-list">
+              {{ range .Pages }}
+              <li>
+                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                <span class="archive-date">{{ .Date | time.Format "1月2日" }}</span>
+              </li>
+              {{ end }}
+            </ul>
+          {{ end }}
+        {{ end }}
+      </div>
+    </div>
+  </article>
+</div>
+{{ end }}

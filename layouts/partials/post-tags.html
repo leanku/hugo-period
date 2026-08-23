@@ -1,0 +1,10 @@
+{{/* 文章标签（对应 content/post-tags.php） */}}
+{{ with .GetTerms "tags" }}
+<div class="post-tags">
+  <ul>
+    {{ range . }}
+    <li><a href="{{ .RelPermalink }}" title="{{ i18n "viewAllTagged" (dict "name" .LinkTitle) }}">{{ .LinkTitle }}</a></li>
+    {{ end }}
+  </ul>
+</div>
+{{ end }}

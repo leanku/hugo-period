@@ -1,0 +1,12 @@
+<section class="widget widget_categories">
+  <h3 class="widget-title">
+    <span class="widget-title-text">{{ i18n "categories" }}</span>
+    <a class="widget-more" href="{{ "categories/" | relURL }}">{{ i18n "more" }}</a>
+  </h3>
+  <ul>
+    {{ $limit := int (site.Params.sidebar.categoriesLimit | default 5) }}
+    {{ range first $limit site.Taxonomies.categories.ByCount }}
+    <li><a href="{{ .Page.RelPermalink }}">{{ .Page.LinkTitle }}</a> ({{ .Count }})</li>
+    {{ end }}
+  </ul>
+</section>

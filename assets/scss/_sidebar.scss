@@ -1,0 +1,189 @@
+// ============================================================
+// Sidebar — 侧栏组件（对应 WP widgets）
+// ============================================================
+
+@import "variables";
+@import "mixins";
+
+.sidebar-primary .widget {
+  margin-bottom: 0.75em;
+
+  .widget-title {
+    font-size: 1em;
+    line-height: 1.5;
+  }
+}
+
+.widget {
+  background: $c-card;
+  @include card-shadow;
+  padding: $card-pad-mobile;
+
+  & > * { font-size: 0.875em; line-height: 1.715; }
+
+  a:hover, a:active, a:focus { text-decoration: underline; }
+}
+
+.widget-title {
+  font-size: 1em;
+  line-height: 1.5;
+  margin-bottom: 1.5em;
+  display: flex;                 // 标题左、"更多 »"右，同一行对齐
+  align-items: baseline;
+  justify-content: space-between;
+
+  .widget-title-text { margin-right: 0.75em; }
+}
+
+// 标题行右侧的"更多 »"链接
+.widget-more {
+  font-size: 0.75em;
+  font-weight: $font-regular;
+  line-height: 1.5;
+  color: $c-text;
+  white-space: nowrap;
+  @include transition(all, 0.2s);
+
+  &:hover, &:active, &:focus {
+    color: $c-text-hover;
+    text-decoration: underline;
+  }
+}
+
+.widget ul {
+  list-style: none;
+  margin: 0;
+}
+
+.widget li {
+  margin-bottom: 0.75em;
+}
+
+// 最近文章
+.widget_recent_entries .post-date {
+  font-size: 0.75em;
+  line-height: 1.5;
+  display: block;
+  margin-bottom: 6px;
+}
+
+// 关于组件：结构与视觉比例复刻 laruence.com 的 widget_text
+// 布局：flex 垂直居中（图片与文字同高对齐），间距/边距紧凑
+.widget_text #profile {
+  display: flex;
+  align-items: center;      // 图片与文字垂直居中，保持同高
+  margin: 0;
+  padding: 0;
+}
+
+.widget_text #profile #profile_picture {
+  flex: 0 0 auto;
+  width: 81px;
+  height: 50px;
+  margin: 0 0.75em 0 0;     // 图片与文字间距（紧凑）
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;   // 填满 81×50 盒（laruence 的 logo 天然为该比例，方头像则 cover 裁切）
+  }
+}
+
+.widget_text #profile #profile_intro {
+  flex: 1;
+  min-width: 0;
+}
+
+.widget_text #profile #profile_intro p {
+  font-size: 85%;
+  margin: 0;
+}
+
+.widget_text #profile #profile_intro p + p {
+  margin-top: 0.125em;       // 名字与简介间距（紧凑）
+}
+
+.widget_text #profile #profile_intro .name {
+  font-weight: $font-bold;
+  font-size: 110%;
+  line-height: 1.2;
+}
+
+.widget_text #profile #profile_intro p a {
+  font-weight: 500;
+  color: #000;
+}
+
+// 标签云
+.widget_tag_cloud .tagcloud a {
+  display: inline-block;
+  border: solid 1px $c-text;
+  padding: 0 12px;
+  margin: 0 6px 6px 0;
+  @include transition(all, 0.2s);
+}
+.widget_tag_cloud .tagcloud a:hover,
+.widget_tag_cloud .tagcloud a:active,
+.widget_tag_cloud .tagcloud a:focus {
+  background: $c-text;
+  color: $c-header-text;
+  text-decoration: none;
+}
+
+// 友情链接列表（带无序列表标记 " - "，参考无序列表样式）
+.links-list-sidebar {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    position: relative;
+    margin-bottom: 0.5em;
+    padding-left: 1.1em;
+
+    &::before {
+      content: "-";
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: $c-muted;
+      font-weight: $font-bold;
+    }
+
+    &:last-child { margin-bottom: 0; }
+
+    a { font-weight: $font-regular; }
+  }
+}
+
+// 日历
+.widget_calendar {
+  caption { margin-bottom: 6px; }
+  table {
+    margin: 0 auto 0.75em;
+    width: 100%;
+    text-align: center;
+  }
+  thead { background: $c-page; }
+  th, tr, td { border-color: $c-input-border; }
+  #today { background: $c-text; color: $c-header-text; }
+  #prev, #next, .pad { padding: 0; }
+  #prev a, #next a, .pad a {
+    display: block;
+    padding: 8px;
+  }
+  #prev a:hover, #next a:hover, .pad a:hover { background: $c-page; }
+}
+
+// 桌面端侧栏
+@include bp($bp-900) {
+  .sidebar-primary {
+    width: $col-side;
+    float: left;
+    margin-top: 3em;
+
+    .widget { padding-top: 1.875em; }
+  }
+}
+

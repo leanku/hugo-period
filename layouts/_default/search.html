@@ -1,0 +1,30 @@
+{{ define "main" }}
+{{/* 搜索结果页：Pagefind UI。data-pagefind-ignore 防止本页被索引进搜索结果；
+    pagefind-ui.js 用 defer 保证在 DOMContentLoaded 监听器触发前就绪 */}}
+<div class="entry" data-pagefind-ignore>
+  <article>
+    <div class="post-container">
+      <div class="post-header">
+        <h1 class="post-title">{{ .Title }}</h1>
+      </div>
+      <div class="post-content">
+        {{ .Content }}
+        {{ if eq (site.Params.search.provider | default "none") "pagefind" }}
+          <div id="search"></div>
+          <link href="{{ "pagefind/pagefind-ui.css" | absURL }}" rel="stylesheet">
+          <script src="{{ "pagefind/pagefind-ui.js" | absURL }}" defer></script>
+          <script>window.addEventListener("DOMContentLoaded", function(){
+            var ui = new PagefindUI({ element: "#search", showSubResults: true });
+            // Pagefind UI 不会自动读取 URL 参数：从 ?q= 读取并触发搜索
+            var params = new URLSearchParams(window.location.search);
+            var q = params.get("q");
+            if (q) { ui.triggerSearch(q); }
+          });</script>
+        {{ else }}
+          <p>搜索尚未启用。请在 <code>config.toml</code> 中设置 <code>params.search.provider = "pagefind"</code>，并在构建后运行 <code>npx pagefind --site public</code>（详见 README）。</p>
+        {{ end }}
+      </div>
+    </div>
+  </article>
+</div>
+{{ end }}

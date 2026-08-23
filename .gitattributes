@@ -1,0 +1,14 @@
+# 文本文件统一使用 LF（GitHub 惯例），避免 Windows 下 CRLF 造成 diff 噪音
+* text=auto eol=lf
+
+# 二进制文件（不进行文本规范化）
+*.jpg binary
+*.png binary
+*.gif binary
+*.webp binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
+*.ico binary
+*.svg text eol=lf

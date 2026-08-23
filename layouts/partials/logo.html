@@ -1,0 +1,10 @@
+<div id="site-title" class="site-title">
+  <a href="{{ site.Home.RelPermalink }}">
+    {{ if site.Params.logo }}
+      <span class="screen-reader-text">{{ site.Title }}</span>
+      <img class="logo" src="{{ site.Params.logo | absURL }}" alt="{{ site.Title }}">
+    {{ else }}
+      {{ site.Title }}
+    {{ end }}
+  </a>
+</div>

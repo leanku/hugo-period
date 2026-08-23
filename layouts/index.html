@@ -1,0 +1,12 @@
+{{ define "main" }}
+<h1 class="screen-reader-text">{{ site.Title }} {{ i18n "posts" }}</h1>
+<div id="loop-container" class="loop-container">
+  {{/* 只渲染主分区文章，排除 search/archives/about 等普通页面（跟随 mainSections，适配任意分区名）*/}}
+  {{ $posts := partial "post-pages.html" . }}
+  {{ $paginator := .Paginate $posts }}
+  {{ range $paginator.Pages }}
+    {{ partial "post-card.html" . }}
+  {{ end }}
+</div>
+{{ partial "pagination.html" . }}
+{{ end }}

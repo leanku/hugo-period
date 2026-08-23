@@ -1,0 +1,16 @@
+{{/* 友情链接：结构与样式参考 laruence.com 的 Links（widget_text > textwidget > 纯链接列表）
+    侧栏默认显示 limit 个名称链接，完整信息（介绍/作者）见 /links/ 页 */}}
+<section class="widget widget_text widget_links">
+  <div class="textwidget">
+    <h3 class="widget-title">
+      <span class="widget-title-text">{{ i18n "links" }}</span>
+      <a class="widget-more" href="{{ "links/" | relURL }}">{{ i18n "more" }}</a>
+    </h3>
+    <ul class="links-list-sidebar">
+      {{ $limit := int (site.Params.sidebar.links.limit | default 5) }}
+      {{ range first $limit site.Params.sidebar.links.items }}
+      <li><a href="{{ .url }}" target="_blank" rel="noopener">{{ .name }}</a></li>
+      {{ end }}
+    </ul>
+  </div>
+</section>
