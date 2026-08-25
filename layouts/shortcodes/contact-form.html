@@ -24,5 +24,10 @@
   </p>
 </form>
 {{ else }}
-<p>{{ i18n "formName" }}: 联系表单未启用。请在 <code>config.toml</code> 中设置 <code>params.contactForm.provider</code> 与 <code>endpoint</code>（详见 README）。</p>
+<!-- <p>{{ i18n "formName" }}: 联系表单未启用。请在 <code>config.toml</code> 中设置 <code>params.contactForm.provider</code> 与 <code>endpoint</code>（详见 README）。</p> -->
+<div class="contact-notice-period">
+  <p class="notice-text">
+    联系表单暂未启用，欢迎通过邮件与我交流。
+  </p>
+</div>
 {{ end }}

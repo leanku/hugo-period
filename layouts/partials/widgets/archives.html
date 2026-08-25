@@ -1,4 +1,4 @@
-<section class="widget widget_archives">
+<!-- <section class="widget widget_archives">
   <h3 class="widget-title">{{ i18n "archives" }}</h3>
   <ul>
     {{ $pages := partial "post-pages.html" . }}
@@ -7,6 +7,24 @@
       {{ range .Pages.GroupByDate "01" }}
       <li><a href="{{ printf "%sarchives/#%s-%s" site.Home.RelPermalink $year .Key }}">{{ $year }}年{{ .Key }}月</a> ({{ len .Pages }})</li>
       {{ end }}
+    {{ end }}
+  </ul>
+</section> -->
+<!-- 最新的5个月份 -->
+<section class="widget widget_archives">
+  <h3 class="widget-title">{{ i18n "archives" }}</h3>
+  <ul>
+    {{ $pages := partial "post-pages.html" . }}
+    {{/* 先按日期倒序排序所有页面，再按年月分组，最后取前5组 */}}
+    {{ range first 5 ($pages.GroupByDate "2006-01") }}
+      {{/* 将分组键（如 "2026-08"）拆分为年和月 */}}
+      {{ $year := index (split .Key "-") 0 }}
+      {{ $month := index (split .Key "-") 1 }}
+      <li>
+        <a href="{{ printf "%sarchives/#%s-%s" site.Home.RelPermalink $year $month }}">
+          {{ $year }}年{{ $month }}月
+        </a> ({{ len .Pages }})
+      </li>
     {{ end }}
   </ul>
 </section>

@@ -3,6 +3,9 @@
     {{ with site.Copyright }}<p class="site-copyright">{{ . }}</p>{{ end }}
   </div>
   <div class="design-credit">
-    <span>{{ site.Params.footerText | default "Period Hugo Theme" }}</span>
+    <span>{{ site.Params.footerText | markdownify | default "Period Hugo Theme" }}</span>
+    {{ with site.Params.donateURL }}
+      <a class="donate-link" href="{{ . }}" title="{{ i18n "donate" | default "Donate" }}"><i class="fas fa-mug-hot" aria-hidden="true"></i><span class="screen-reader-text">{{ i18n "donate" | default "Donate" }}</span></a>
+    {{ end }}
   </div>
 </footer>

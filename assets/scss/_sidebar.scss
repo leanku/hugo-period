@@ -51,12 +51,12 @@
 }
 
 .widget ul {
-  list-style: none;
-  margin: 0;
+  // list-style: none;
+  // margin: 0;
 }
 
 .widget li {
-  margin-bottom: 0.75em;
+  // margin-bottom: 0.75em;
 }
 
 // 最近文章
@@ -67,8 +67,11 @@
   margin-bottom: 6px;
 }
 
-// 关于组件：结构与视觉比例复刻 laruence.com 的 widget_text
 // 布局：flex 垂直居中（图片与文字同高对齐），间距/边距紧凑
+.widget_text {
+  padding: 0.9em 4.6875375%;
+}
+
 .widget_text #profile {
   display: flex;
   align-items: center;      // 图片与文字垂直居中，保持同高
@@ -132,30 +135,30 @@
 }
 
 // 友情链接列表（带无序列表标记 " - "，参考无序列表样式）
-.links-list-sidebar {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+// .links-list-sidebar {
+//   list-style: none;
+//   margin: 0;
+//   padding: 0;
 
-  li {
-    position: relative;
-    margin-bottom: 0.5em;
-    padding-left: 1.1em;
+//   li {
+//     position: relative;
+//     margin-bottom: 0.5em;
+//     padding-left: 1.1em;
 
-    &::before {
-      content: "-";
-      position: absolute;
-      left: 0;
-      top: 0;
-      color: $c-muted;
-      font-weight: $font-bold;
-    }
+//     &::before {
+//       content: "-";
+//       position: absolute;
+//       left: 0;
+//       top: 0;
+//       color: $c-muted;
+//       font-weight: $font-bold;
+//     }
 
-    &:last-child { margin-bottom: 0; }
+//     &:last-child { margin-bottom: 0; }
 
-    a { font-weight: $font-regular; }
-  }
-}
+//     a { font-weight: $font-regular; }
+//   }
+// }
 
 // 日历
 .widget_calendar {
@@ -183,7 +186,7 @@
     float: left;
     margin-top: 3em;
 
-    .widget { padding-top: 1.875em; }
+    // .widget { padding-top: 1.875em; }
   }
 }
 

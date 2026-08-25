@@ -86,3 +86,23 @@ input[type=submit] {
   }
 }
 
+/* 联系提示样式 */
+.contact-notice-period {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin: 2.5rem 0;
+  padding: 1.25rem 1.5rem;
+  border: 1px dashed #d4d4d4; /* 使用虚线，呼应主题可能的文艺感 */
+  border-radius: 2px;          /* 极小的圆角，保持干净 */
+  background-color: #fafafa;   /* 极浅的灰底，比纯白更有质感 */
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.notice-text {
+  margin: 0;
+  line-height: 1.7;
+}
+
+

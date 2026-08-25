@@ -150,6 +150,6 @@ exampleSite 分支          # 独立示例站（标准 Hugo 站点）
 
 ## 九、许可与致谢
 
-- 主题代码：**GPL v2 or later**（移植自 [Period WordPress Theme](https://www.competethemes.com/period/) by Compete Themes）
+- 主题代码：**GPL v2 or later**（参考 [Period WordPress Theme](https://www.competethemes.com/period/) by Compete Themes）
 - 内置 Font Awesome 5 Free（CC BY 4.0 / SIL OFL 1.1 / MIT）
 - 示例图片为占位图，发布前请替换
