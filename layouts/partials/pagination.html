@@ -1,14 +1,27 @@
-{{/* 分页（对应 the_posts_pagination） */}}
-{{ if gt .Paginator.TotalPages 1 }}
+{{/* 分页（对应 the_posts_pagination；样式对齐 laruence：白卡片 + «/» 箭头 + 当前页灰底）
+    页码折叠：始终显示 前2页 … 当前页±1 … 末页，避免页数多时全列表 */}}
+{{ $paginator := .Paginator }}
+{{ if gt $paginator.TotalPages 1 }}
 <nav class="pagination" role="navigation">
-  {{ if .Paginator.HasPrev }}
-    <a class="prev" href="{{ .Paginator.Prev.URL }}">{{ i18n "previous" }}</a>
+  {{ if $paginator.HasPrev }}
+    <a class="prev" href="{{ $paginator.Prev.URL }}">{{ i18n "previous" }}</a>
   {{ end }}
-  {{ range .Paginator.Pagers }}
-    <a class="{{ if eq .PageNumber $.Paginator.PageNumber }}current{{ end }}" href="{{ .URL }}">{{ .PageNumber }}</a>
-  {{ end }}
-  {{ if .Paginator.HasNext }}
-    <a class="next" href="{{ .Paginator.Next.URL }}">{{ i18n "next" }}</a>
+  {{- $ellipsed := false }}
+  {{- $shouldEllipse := false }}
+  {{- range $paginator.Pagers }}
+    {{- $right := sub $paginator.PageNumber (add .PageNumber 1) }}
+    {{- $showNumber := or (le .PageNumber 2) (eq .PageNumber $paginator.TotalPages) (and (gt .PageNumber (sub $paginator.PageNumber 2)) (lt .PageNumber (add $paginator.PageNumber 2))) }}
+    {{- if $showNumber }}
+      {{- $ellipsed = false }}
+      {{- $shouldEllipse = false }}
+      <a class="{{ if eq .PageNumber $paginator.PageNumber }}current{{ end }}" href="{{ .URL }}">{{ .PageNumber }}</a>
+    {{- else if eq $shouldEllipse false }}
+      {{- $shouldEllipse = true }}
+      <span class="pagination-ellipsis">…</span>
+    {{- end }}
+  {{- end }}
+  {{ if $paginator.HasNext }}
+    <a class="next" href="{{ $paginator.Next.URL }}">{{ i18n "next" }}</a>
   {{ end }}
 </nav>
 {{ end }}

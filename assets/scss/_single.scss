@@ -39,6 +39,27 @@
   a:hover, a:active, a:focus { text-decoration: none; }
   iframe { max-width: 100%; }
   @include clearfix;
+
+  // 标题字阶（仅正文区；h2 > h3 > h4 > 正文，提升阅读层级）
+  h2 {
+    font-size: 1.5em;    // 24px
+    line-height: 1.35;
+    margin: 1.6em 0 0.6em;
+  }
+  h3 {
+    font-size: 1.25em;   // 20px
+    line-height: 1.4;
+    margin: 1.4em 0 0.5em;
+  }
+  h4 {
+    font-size: 1.125em;  // 18px
+    line-height: 1.45;
+    margin: 1.2em 0 0.4em;
+  }
+  h5, h6 {
+    font-size: 1em;
+    margin: 1em 0 0.4em;
+  }
 }
 
 .last-updated {
