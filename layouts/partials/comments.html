@@ -1,8 +1,11 @@
 {{/* 评论（对应 comments_template）：Giscus / Utterances / none
     注意：giscus 的 client.js 只从 <script> 标签自身的 data-* 属性读取配置（见官方片段），
-    配置必须放在 script 标签上，而不是 .giscus div 上（client.js 会自行创建该 div）。*/}}
+    配置必须放在 script 标签上，而不是 .giscus div 上（client.js 会自行创建该 div）。
+    显示条件：文章（mainSections 内）默认显示；普通页面 front matter 写 comments: true 也显示；
+    provider = "none" 时始终不渲染。*/}}
 {{ $provider := site.Params.comments.provider | default "none" }}
-{{ if and (in (site.Params.mainSections | default (slice "posts")) .Type) (ne $provider "none") }}
+{{ $show := or (in (site.Params.mainSections | default (slice "posts")) .Type) .Params.comments }}
+{{ if and $show (ne $provider "none") }}
 <section id="comments" class="comments-area">
   <h2 class="screen-reader-text">{{ i18n "leaveComment" }}</h2>
   {{ if eq $provider "giscus" }}

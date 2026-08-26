@@ -1,0 +1,12 @@
+{{/* 侧边栏搜索（对应原主题 widget_search，样式参考 laruence.com #search-2）：
+     无标题；输入框 75% + Search 按钮 25% 同排；提交到 /search/?q=，与顶部搜索一致
+     params.sidebar.search = true 时显示 */}}
+<section id="widget-search" class="widget widget_search">
+  <div class="search-form-container">
+    <form role="search" method="get" class="search-form" action="{{ site.Home.RelPermalink }}search/">
+      <label class="screen-reader-text" for="search-field">{{ i18n "search" }}</label>
+      <input id="search-field" type="search" class="search-field" value="" name="q" placeholder="{{ site.Params.search.placeholder | default (i18n "searchPlaceholder") }}" title="{{ i18n "search" }}">
+      <input type="submit" class="search-submit" value="{{ i18n "search" }}">
+    </form>
+  </div>
+</section>

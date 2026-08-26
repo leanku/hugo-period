@@ -52,7 +52,8 @@
 }
 
 // ---- 页眉搜索（对应 content/search-bar.php）----
-.search-form-container {
+// 注意：作用域限定 .site-header，避免污染侧边栏搜索（widget_search 也含 .search-form-container）
+.site-header .search-form-container {
   position: absolute;
   right: 6px;
   top: 0.75em;
@@ -158,7 +159,7 @@
     vertical-align: middle;
   }
 
-  .search-form-container {
+  .site-header .search-form-container {
     position: relative;
     float: right;
     top: -5px;

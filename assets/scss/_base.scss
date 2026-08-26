@@ -181,6 +181,14 @@ td, th {
 
 thead { background: $c-input-bg; }
 
+// 移动端：表格超宽时横向滚动（与代码块 .highlight 同模式），避免内容被裁切
+.post-content table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
 // ---- Images ----
 img {
   max-width: 100%;

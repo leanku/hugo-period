@@ -67,6 +67,30 @@
   margin-bottom: 6px;
 }
 
+// 侧边栏搜索（对应原主题 widget_search，参考 laruence.com #search-2）
+// 输入框 75% + Search 按钮 25% 同排浮动；无标题
+.widget_search {
+  .search-form { @include clearfix; }
+  .search-field {
+    width: calc(75% - 6px);
+    max-width: none;              // 覆盖 _forms.scss 的 27.75em 上限
+    float: left;
+    margin-right: 2px;
+    padding: 10px 12px;
+    min-height: 37px;
+  }
+  .search-submit {
+    width: auto;
+    min-width: 25%;
+    max-width: 25%;
+    float: right;
+    padding: 10px 0;
+    min-height: 37px;
+    text-align: center;
+  }
+  &::after { content: "."; display: block; clear: both; visibility: hidden; line-height: 0; height: 0; }
+}
+
 // 布局：flex 垂直居中（图片与文字同高对齐），间距/边距紧凑
 .widget_text {
   padding: 0.9em 4.6875375%;

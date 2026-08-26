@@ -1,0 +1,22 @@
+{{- /* Sitemap：继承 Hugo 内置输出，仅排除低价值 URL：
+     - 分类/标签列表页（.Kind = taxonomy，如 /categories/、/tags/）
+     - 分页页（/page/N/）
+     保留：首页、分区、分类/标签术语页、文章、页面。
+     单篇可用 front matter `sitemap: {disable: true}` 或 `sitemapExclude: true` 排除。*/}}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  {{- range site.Pages }}
+    {{- $isPagination := findRE "/page/[0-9]+/$" .RelPermalink }}
+    {{- if and (ne .Kind "taxonomy") (not $isPagination) (ne .Sitemap.Disable true) (ne .Params.sitemapExclude true) }}
+    <url>
+      <loc>{{ .Permalink }}</loc>{{ if not .Lastmod.IsZero }}
+      <lastmod>{{ safeHTML ( .Lastmod.Format "2006-01-02T15:04:05-07:00" ) }}</lastmod>{{ end }}{{ with .Sitemap.ChangeFreq }}
+      <changefreq>{{ . }}</changefreq>{{ end }}{{ if ge .Sitemap.Priority 0.0 }}
+      <priority>{{ .Sitemap.Priority }}</priority>{{ end }}{{ if .IsTranslated }}
+      {{- range .Translations }}
+      <xhtml:link rel="alternate" hreflang="{{ .Lang }}" href="{{ .Permalink }}"/>{{ end }}
+      <xhtml:link rel="alternate" hreflang="{{ .Lang }}" href="{{ .Permalink }}"/>{{ end }}
+    </url>
+    {{- end }}
+  {{- end }}
+</urlset>

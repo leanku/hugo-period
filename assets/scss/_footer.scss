@@ -38,6 +38,12 @@
     line-height: 1.5;
   }
 
+  // 访问量统计（与页脚文字同色弱化，不抢眼）
+  .site-pv {
+    color: $c-header-text-hover;
+    white-space: nowrap;
+  }
+
   .donate-link {
     display: inline-flex;
     align-items: center;

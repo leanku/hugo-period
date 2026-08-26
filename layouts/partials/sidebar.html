@@ -1,5 +1,6 @@
 {{/* 侧边栏（对应 sidebar-primary.php；由 params.sidebar 驱动） */}}
 {{ $show := false }}
+{{ if site.Params.sidebar.search }}{{ $show = true }}{{ end }}
 {{ if site.Params.sidebar.about.text }}{{ $show = true }}{{ end }}
 {{ if gt (int (site.Params.sidebar.recentPosts | default 0)) 0 }}{{ $show = true }}{{ end }}
 {{ if site.Params.sidebar.categories }}{{ $show = true }}{{ end }}
@@ -10,6 +11,7 @@
 <aside class="sidebar sidebar-primary" id="sidebar-primary" role="complementary">
   <h2 class="screen-reader-text">{{ i18n "sidebar" }}</h2>
   {{ if site.Params.sidebar.about.text }}{{ partial "widgets/about.html" . }}{{ end }}
+  {{ if site.Params.sidebar.search }}{{ partial "widgets/search.html" . }}{{ end }}
   {{ if gt (int (site.Params.sidebar.recentPosts | default 0)) 0 }}{{ partial "widgets/recent.html" . }}{{ end }}
   {{ if site.Params.sidebar.categories }}{{ partial "widgets/categories.html" . }}{{ end }}
   {{ if site.Params.sidebar.tags }}{{ partial "widgets/tags.html" . }}{{ end }}

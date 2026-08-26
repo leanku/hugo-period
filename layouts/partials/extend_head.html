@@ -1,8 +1,4 @@
 {{- /* 扩展 head 钩子：在 </head> 前注入自定义内容。
-  站点级覆盖方法：在站点根目录创建 layouts/partials/extend_head.html */}}
-{{- /* 在此放置站点自定义的 head 片段（统计脚本、站点验证、自定义 meta 等） */}}
-
-<script type="text/javascript">
-      console.log("%c Period %c v1.0.0 %c", "color: #fff; background: #1a1a1a; padding: 3px 10px; font-family: serif;", "color: rgba(26,26,26,0.5); font-size: 9px; padding: 3px; font-family: monospace;", "background: transparent")
-      console.log(`%c 未事不迎，保持热爱。`, `background:transparent; font-size:10px; color:rgba(26,26,26,.35); font-family:monospace;`)
-</script>
+  Hugo 模板查找顺序站点优先于主题：在站点根目录创建 layouts/partials/extend_head.html
+  即可覆盖本文件，用于放置站点个性化片段（统计脚本、console 打印、自定义 meta 等）。
+  主题侧保持空白，不携带任何站点专属内容。*/}}

@@ -27,14 +27,22 @@
 {{- /* canonical（支持 canonicalURL 手动覆盖）*/}}
 <link rel="canonical" href="{{ if .Params.canonicalURL }}{{ trim .Params.canonicalURL " " }}{{ else }}{{ .Permalink }}{{ end }}">
 
+{{- /* Open Graph locale（站点级；页面可用 .Params.locale 覆盖，如 en_US）*/}}
+<meta property="og:locale" content="{{ with .Params.locale }}{{ . }}{{ else }}{{ if eq site.Language.Lang "en" }}en_US{{ else }}zh_CN{{ end }}{{ end }}">
+
 {{- /* 搜索引擎站长验证 */}}
 {{- with site.Params.seo.verification.google }}<meta name="google-site-verification" content="{{ . }}">{{ end }}
 {{- with site.Params.seo.verification.bing }}<meta name="msvalidate.01" content="{{ . }}">{{ end }}
 {{- with site.Params.seo.verification.yandex }}<meta name="yandex-verification" content="{{ . }}">{{ end }}
 {{- with site.Params.seo.verification.naver }}<meta name="naver-site-verification" content="{{ . }}">{{ end }}
 
-{{- /* Favicon 家族与主题色 */}}
-<link rel="icon" href="{{ site.Params.seo.favicon | default "images/favicon.svg" | absURL }}" type="image/svg+xml">
+{{- /* Favicon 家族与主题色（按扩展名推断 MIME：.ico → image/x-icon + sizes，.svg → image/svg+xml）*/}}
+{{- $favicon := site.Params.seo.favicon | default "images/favicon.svg" | absURL }}
+{{- if strings.HasSuffix $favicon ".ico" }}
+<link rel="icon" href="{{ $favicon }}" type="image/x-icon" sizes="32x32">
+{{- else }}
+<link rel="icon" href="{{ $favicon }}" type="image/svg+xml">
+{{- end }}
 <link rel="apple-touch-icon" href="{{ site.Params.seo.appleTouchIcon | default "images/favicon.svg" | absURL }}">
 <meta name="theme-color" content="{{ site.Params.seo.themeColor | default "#333333" }}">
 <meta name="msapplication-TileColor" content="{{ site.Params.seo.themeColor | default "#333333" }}">
