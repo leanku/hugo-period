@@ -12,7 +12,14 @@
         {{ if site.Params.fullPost }}
           {{ .Content }}
         {{ else }}
-          <p>{{ if .Description }}{{ .Description }}{{ else }}{{ .Summary }}{{ end }}</p>
+          {{- /* 摘要：description 优先；否则 plainify 去 HTML + 按 excerptLength 截取（Hugo 0.165 的 .Summary 无 more 分隔符时返回全文，不可用）*/}}
+          {{- $summary := "" }}
+          {{- if .Description }}
+            {{- $summary = .Description }}
+          {{- else }}
+            {{- $summary = .Content | plainify | truncate (int (site.Params.excerptLength | default 80)) }}
+          {{- end }}
+          <p>{{ $summary }}</p>
           <div class="more-link-wrapper">
             <a class="more-link" href="{{ .RelPermalink }}">{{ site.Params.readMoreText | default (i18n "continueReading") }}<span class="screen-reader-text">{{ .Title }}</span></a>
           </div>

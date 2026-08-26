@@ -6,13 +6,13 @@
     {{- $footerText := site.Params.footerText | default "Period Hugo Theme" -}}
     {{- $footerText = replace $footerText "{year}" (string now.Year) -}}
     <span>{{ $footerText | markdownify }}</span>
+    {{ with site.Params.donateURL }}
+      <a class="donate-link" href="{{ . }}" title="{{ i18n "donate" | default "Donate" }}"><i class="fas fa-mug-hot" aria-hidden="true"></i><span class="screen-reader-text">{{ i18n "donate" | default "Donate" }}</span></a>
+    {{ end }}
     {{- /* 访问量统计（对应站点统计脚本，如不蒜子；pv.enable = true 时显示）*/}}
     {{- if site.Params.pv.enable }}
     <!-- <span class="site-pv" id="busuanzi_container_site_pv">{{ i18n "sitePV" }}<span id="busuanzi_value_site_pv"></span>{{ i18n "times" }}</span> -->
     <span class="site-pv" id="busuanzi_container_site_pv">{{ i18n "sitePV" }}<span id="busuanzi_value_site_pv"></span></span>
     {{- end }}
-    {{ with site.Params.donateURL }}
-      <a class="donate-link" href="{{ . }}" title="{{ i18n "donate" | default "Donate" }}"><i class="fas fa-mug-hot" aria-hidden="true"></i><span class="screen-reader-text">{{ i18n "donate" | default "Donate" }}</span></a>
-    {{ end }}
   </div>
 </footer>
