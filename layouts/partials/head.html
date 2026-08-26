@@ -8,8 +8,8 @@
 <meta name="robots" content="noindex, nofollow">
 {{- end }}
 
-{{- /* 标题 */}}
-<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ if .Title }}{{ .Title }} | {{ end }}{{ site.Title }}{{ end }}</title>
+{{- /* 标题：首页用完整站点名（site.Title）；其他页用 "页面名 | 站标（siteName）" */}}
+<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ if .Title }}{{ .Title }} | {{ end }}{{ site.Params.siteName | default site.Title }}{{ end }}</title>
 
 {{- /* 关键词 */}}
 {{- if .IsHome }}

@@ -1,10 +1,11 @@
+{{/* 站标：可见文字用 params.siteName（与 SEO 标题 site.Title 解耦，可不同）；无 logo 图时回退 siteName */}}
 <div id="site-title" class="site-title">
   <a href="{{ site.Home.RelPermalink }}">
     {{ if site.Params.logo }}
-      <span class="screen-reader-text">{{ site.Title }}</span>
-      <img class="logo" src="{{ site.Params.logo | absURL }}" alt="{{ site.Title }}">
+      <span class="screen-reader-text">{{ site.Params.siteName | default site.Title }}</span>
+      <img class="logo" src="{{ site.Params.logo | absURL }}" alt="{{ site.Params.siteName | default site.Title }}">
     {{ else }}
-      {{ site.Title }}
+      {{ site.Params.siteName | default site.Title }}
     {{ end }}
   </a>
 </div>
