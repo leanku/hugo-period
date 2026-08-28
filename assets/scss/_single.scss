@@ -66,6 +66,48 @@
   font-style: italic;
 }
 
+// ---- 单篇加密（.protected 块 + 密码界面）----
+.protected {
+  margin: 1.5em 0;
+  padding: 1.5em;
+  border: 1px dashed $c-input-border;
+  background: $c-input-bg;
+}
+
+.protected-ui {
+  text-align: center;
+
+  .protected-title {
+    font-weight: $font-bold;
+    margin: 0 0 0.25em;
+    &::before { content: "\f023"; font-family: "Font Awesome 5 Free"; font-weight: 900; margin-right: 0.5em; }
+  }
+
+  .protected-hint {
+    font-size: 0.875em;
+    color: $c-muted;
+    margin: 0 0 1em;
+  }
+
+  .protected-input {
+    max-width: 18em;
+    margin: 0 0.5em 0 0;
+    text-align: center;
+  }
+
+  .protected-submit {
+    padding: 10px 22px;
+    font-weight: $font-bold;
+    @include transition(all, 0.2s);
+  }
+
+  .protected-status {
+    font-size: 0.875em;
+    margin: 0.75em 0 0;
+    &.error { color: #c0392b; }
+  }
+}
+
 // ---- 底部元数据 ----
 .post-meta {
   margin: 1.875em 0 0.75em;

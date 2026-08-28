@@ -1,0 +1,9 @@
+{{/* 单篇加密（对应 Period 主题加密功能）：
+    用法：{{< protected >}}密文base64{{< /protected >}}
+    密文由主题 scripts/encrypt.mjs 生成（PBKDF2 + AES-256-GCM）。
+    密文放入 .protected-cipher span（hidden），前端只读取该元素，避免混入其它内容。
+    data-pagefind-ignore 确保密文不进搜索索引。 */}}
+<div class="protected" data-pagefind-ignore>
+  <span class="protected-cipher" hidden>{{- .Inner -}}</span>
+  <noscript>此内容已加密，需启用 JavaScript 查看。</noscript>
+</div>

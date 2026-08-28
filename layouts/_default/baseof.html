@@ -29,5 +29,7 @@
 {{ partial "scroll-to-top.html" . }}
 {{ $js := resources.Get "js/main.js" | minify | fingerprint }}
 <script src="{{ $js.RelPermalink }}" defer></script>
+{{ $enc := resources.Get "js/encrypt.js" | minify | fingerprint }}
+<script src="{{ $enc.RelPermalink }}" defer></script>
 </body>
 </html>
