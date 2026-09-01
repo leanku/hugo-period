@@ -3,10 +3,10 @@
 <meta property="og:description" content="{{ with .Description }}{{ . }}{{ else }}{{ if .IsPage }}{{ .Summary }}{{ else }}{{ with site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }}" />
 <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}" />
 <meta property="og:url" content="{{ .Permalink }}" />
-{{ $images := partial "seo/get-page-images.html" . }}
-{{ range first 6 $images }}
-<meta property="og:image" content="{{ .Permalink }}" />
-{{ end }}
+{{- /* $images := partial "seo/get-page-images.html" . */}}
+{{- /* range first 6 $images */}}
+<meta property="og:image" content='{{ printf "%simages/og-logo.jpg" $.Permalink }}' />
+{{- /* end */}}
 
 {{- if .IsPage }}
 {{ with .Section }}<meta property="article:section" content="{{ . }}" />{{ end }}
