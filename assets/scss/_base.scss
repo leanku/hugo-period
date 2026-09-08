@@ -110,6 +110,9 @@ pre {
 code {
   background: $c-input-bg;
   padding: 0 0.375em;
+  font-family: Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace;
+  font-size: 14px;
+  word-spacing: normal;
 }
 
 pre code { padding: 0; }
@@ -123,9 +126,17 @@ pre code { padding: 0; }
     padding: 1.25em 1.5em;
     overflow-x: auto;          // 长行横向滚动
     white-space: pre;          // 不自动换行
-    font-size: 0.875em;        // 14px
+    font-size: 0.875em !important;        // 14px
     line-height: 1.6;
     border: 0;                 // 深色背景自带分界，去掉浅色描边
+    letter-spacing: 0.05em; 
+    // background: #384548;
+  }
+
+  pre code {
+    font-family: Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace;
+    word-spacing: normal;
+    font-weight: 400;
   }
 
   // 行号（颜色由 chroma.css 的 .chroma .ln 决定）
